@@ -38,14 +38,15 @@ RUN npm ci --omit=dev
 # Regenerate Prisma Client on the production image
 RUN npx prisma generate
 
-# Copy the compiled typescript code from the builder stage
+# Copy the compiled typescript code and public assets from the builder stage
 COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/public ./public
 
 # Create logs directory to prevent volume mounting errors
 RUN mkdir -p logs
 
 # Expose the API port
-EXPOSE 5000
+EXPOSE 5021
 
 # Start the application
 CMD ["npm", "start"]

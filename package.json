@@ -15,7 +15,6 @@
     "generate-module": "ts-node-dev src/utils/generate-module.ts"
   },
   "devDependencies": {
-    "@prisma/client": "^6.8.2",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.18",
@@ -43,6 +42,7 @@
     "typescript-eslint": "^8.33.0"
   },
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "@aws-sdk/client-s3": "^3.913.0",
     "@paypal/paypal-server-sdk": "^1.1.0",
     "axios": "^1.12.2",

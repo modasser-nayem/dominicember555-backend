@@ -7,7 +7,6 @@ import { Prisma, UserRole, UserStatus } from "@prisma/client";
 import httpStatus from "http-status";
 import AppError from "../../../errors/AppError";
 import prisma from "../../../db/prisma";
-import { recentActivityLog } from "../../../helpers/recentActivity";
 import { uploadFileToCloud } from "../../../upload/fileUpload";
 import { deleteFromCloudinary } from "../../../upload/uploadToCloudinary";
 
@@ -268,11 +267,6 @@ export const UserService = {
       where: {
         id: userInfo.id,
       },
-    });
-
-    await recentActivityLog({
-      actionType: "ACCOUNT_DELETED",
-      message: `${result.name}, Deleted Own Account`,
     });
 
     const { password, ...resultData } = result;
