@@ -7,9 +7,7 @@ export const AuthValidation = {
     name: z.string({ required_error: "name is required" }).nonempty(),
     email: emailSchema,
     password: passwordSchema,
-    location: z
-      .string({ required_error: "location is required!" })
-      .nonempty("location is required!"),
+    location: z.string().optional(),
     fcmToken: z.string().nonempty().optional(),
   }),
 
