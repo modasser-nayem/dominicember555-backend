@@ -8,9 +8,12 @@ export const notifyValidationSchema = {
     receiverId: z
       .string({ required_error: "receiverId is required" })
       .nonempty("receiverId is required!"),
+    title: z
+      .string({ required_error: "title is required" })
+      .nonempty("title is required!"),
     content: z
       .string({ required_error: "content is required" })
       .nonempty("content is required"),
-    data: z.object({}),
+    data: z.object({}).optional(),
   }),
 };

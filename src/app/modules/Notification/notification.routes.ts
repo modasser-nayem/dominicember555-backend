@@ -17,7 +17,6 @@ router.post(
 // Send Notification
 router.post(
   "/send",
-  auth(),
   validateRequest(notifyValidationSchema.sendNotification),
   NotificationController.sendNotification,
 );
