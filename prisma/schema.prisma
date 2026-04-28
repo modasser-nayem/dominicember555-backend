@@ -16,7 +16,7 @@ enum OtpType {
 
 model Otp {
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  email      String    @unique
+  email      String    
   code       Int
   type       OtpType   
   isUsed     Boolean   @default(false)
@@ -27,6 +27,7 @@ model Otp {
   createdAt  DateTime  @default(now())
   updateAt   DateTime  @updatedAt
 
+  @@index([email])
   @@map("otps")
 }
 

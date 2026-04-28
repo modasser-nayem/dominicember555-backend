@@ -75,18 +75,8 @@ export class AuthService {
 
     // create otp
     const genOtp = generateOtp();
-    await prisma.otp.upsert({
-      where: { email: payload.email },
-      update: {
-        type: "ACCOUNT_VERIFY",
-        code: genOtp.otp,
-        expiresAt: genOtp.expiresAt,
-        isUsed: false,
-        isVerified: false,
-        attempts: 0,
-        verifiedAt: null,
-      },
-      create: {
+    await prisma.otp.create({
+      data: {
         type: "ACCOUNT_VERIFY",
         email: payload.email,
         code: genOtp.otp,
@@ -280,18 +270,8 @@ export class AuthService {
     const { otp, expiresAt, expireMinute } = generateOtp();
 
     // Invalidate any previous unverified OTPs for this user
-    await prisma.otp.upsert({
-      where: { email: normalizedEmail },
-      update: {
-        code: otp,
-        type: "FORGOT_PASSWORD",
-        expiresAt,
-        isUsed: false,
-        isVerified: false,
-        attempts: 0,
-        verifiedAt: null,
-      },
-      create: {
+    await prisma.otp.create({
+      data: {
         code: otp,
         type: "FORGOT_PASSWORD",
         email: normalizedEmail,
