@@ -25,38 +25,11 @@ export const NotificationService = {
     return null;
   },
 
-  // Read Single Notification
-  getSingleNotification: async (payload: { notificationId: string }) => {
-    const notification = await prisma.notification.findUnique({
-      where: {
-        id: payload.notificationId,
-      },
-    });
-
-    if (!notification) {
-      throw new AppError(status.NOT_FOUND, "Notification not found!");
-    }
-
-    const result = await prisma.notification.update({
-      where: { id: notification.id },
-      data: {
-        isRead: true,
-      },
-    });
-
-    return result;
-  },
-
   // Read All Notification
   getAllNotifications: async (userId: string) => {
     if (!userId) {
       throw new AppError(status.BAD_REQUEST, "User ID is required");
     }
-
-    await prisma.notification.updateMany({
-      where: { receiverId: userId, isRead: false },
-      data: { isRead: true },
-    });
 
     const notifications = await prisma.notification.findMany({
       where: { receiverId: userId },
@@ -66,11 +39,29 @@ export const NotificationService = {
     return notifications;
   },
 
-  // User unread notifications
-  getUserUnreadNotifications: async (userid: string) => {
-    return await prisma.notification.count({
+  // User unread notifications count
+  getUnreadNotificationsCount: async (userid: string) => {
+    const result = await prisma.notification.count({
       where: { receiverId: userid, isRead: false },
     });
+
+    return {
+      count: result,
+    };
+  },
+
+  // Mark all notifications as read
+  markAllAsRead: async (userId: string) => {
+    if (!userId) {
+      throw new AppError(status.BAD_REQUEST, "User ID is required");
+    }
+
+    const result = await prisma.notification.updateMany({
+      where: { receiverId: userId, isRead: false },
+      data: { isRead: true },
+    });
+
+    return result;
   },
 
   // Create & send notification to a single user

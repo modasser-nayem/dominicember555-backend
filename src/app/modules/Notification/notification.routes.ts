@@ -18,20 +18,20 @@ router.post(
 router.post(
   "/send",
   validateRequest(notifyValidationSchema.sendNotification),
-  NotificationController.sendNotification,
+  NotificationController.sendNotify,
 );
 
 // get all notification
 router.get("/", auth(), NotificationController.getAllNotifications);
 
-// get Unread notification
+// get Unread notification count
 router.get(
-  "/unread-notify",
+  "/unread-count",
   auth(),
-  NotificationController.getUserUnreadNotifications,
+  NotificationController.getUnreadNotifyCount,
 );
 
-// get single notification
-router.get("/:id", auth(), NotificationController.getSingleNotification);
+// mark all as read
+router.patch("/mark-all-read", auth(), NotificationController.markAllAsRead);
 
 export const NotificationsRoutes = router;

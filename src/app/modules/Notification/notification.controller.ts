@@ -18,25 +18,12 @@ export const NotificationController = {
     });
   }),
 
-  sendNotification: catchAsync(async (req, res) => {
+  sendNotify: catchAsync(async (req, res) => {
     const result = await NotificationService.sendToOne(req.body);
 
     sendResponse(res, {
       statusCode: status.OK,
       message: "Successfully Send Notification",
-      data: result,
-    });
-  }),
-
-  getSingleNotification: catchAsync(async (req, res) => {
-    const notificationId = req.params.id;
-    const result = await NotificationService.getSingleNotification({
-      notificationId,
-    });
-
-    sendResponse(res, {
-      statusCode: status.OK,
-      message: "Successfully Read Notification",
       data: result,
     });
   }),
@@ -52,13 +39,25 @@ export const NotificationController = {
     });
   }),
 
-  getUserUnreadNotifications: catchAsync(async (req, res) => {
+  getUnreadNotifyCount: catchAsync(async (req, res) => {
     const userId = req.user.id;
-    const result = await NotificationService.getUserUnreadNotifications(userId);
+    const result =
+      await NotificationService.getUnreadNotificationsCount(userId);
 
     sendResponse(res, {
       statusCode: status.OK,
-      message: "Successfully get unread notifications",
+      message: "Successfully get unread notifications count",
+      data: result,
+    });
+  }),
+
+  markAllAsRead: catchAsync(async (req, res) => {
+    const userId = req.user.id;
+    const result = await NotificationService.markAllAsRead(userId);
+
+    sendResponse(res, {
+      statusCode: status.OK,
+      message: "Successfully marked as read",
       data: result,
     });
   }),

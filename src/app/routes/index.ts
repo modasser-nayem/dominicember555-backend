@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/Auth/auth.routes";
 import { userRoutes } from "../modules/User/user.route";
 import { TaskRoutes } from "../modules/Task/task.routes";
 import { SubscriptionRoutes } from "../modules/Subscription/subscription.routes";
+import { NotificationsRoutes } from "../modules/Notification/notification.routes";
 
 const routers = Router();
 const moduleRoutes: { path: string; route: Router }[] = [
@@ -21,6 +22,10 @@ const moduleRoutes: { path: string; route: Router }[] = [
   {
     path: "/subscriptions",
     route: SubscriptionRoutes,
+  },
+  {
+    path: "/notifications",
+    route: NotificationsRoutes,
   },
 ];
 
